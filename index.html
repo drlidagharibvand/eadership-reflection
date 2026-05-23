@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leadership in the Age of AI — A Short Reflection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#14293E; --navy-soft:#21405E; --ink:#272B2E; --teal:#2C8DA0;
+  --teal-deep:#1B6576; --gold:#B5823A; --gold-soft:#D5AC6D; --green:#4F8466;
+  --bg:#F1EFE8; --card:#FFFFFF; --line:#E3DFD3; --muted:#736E62;
+  --shadow:0 10px 34px -16px rgba(20,41,62,.34);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:'Hanken Grotesk',system-ui,-apple-system,sans-serif;
+  background:var(--bg); color:var(--ink); line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+/* subtle grain */
+body::before{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  opacity:.5; mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/></svg>");
+}
+.serif{font-family:'Newsreader',Georgia,serif}
+.wrap{max-width:720px; margin:0 auto; padding:0 22px; position:relative; z-index:1}
+
+/* ---------- header ---------- */
+header{padding:62px 0 30px; text-align:left}
+.eyebrow{
+  font-size:12px; font-weight:700; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--teal-deep);
+}
+.eyebrow .dot{display:inline-block; width:5px;height:5px;border-radius:50%;
+  background:var(--gold); margin:0 9px 2px}
+h1.title{
+  font-family:'Newsreader',Georgia,serif; font-weight:500; color:var(--navy);
+  font-size:clamp(33px,7.4vw,52px); line-height:1.08; margin:16px 0 0;
+  letter-spacing:-.012em;
+}
+h1.title em{font-style:italic; color:var(--teal-deep)}
+.rule{width:54px;height:3px;background:var(--gold);margin:22px 0 18px;border-radius:2px}
+.lede{
+  font-size:16px; color:#3c4248; max-width:38em;
+}
+.lede b{color:var(--navy); font-weight:600}
+.meta{
+  display:flex; flex-wrap:wrap; gap:8px; margin-top:22px;
+}
+.chip{
+  font-size:11.5px; font-weight:600; letter-spacing:.04em; text-transform:uppercase;
+  color:var(--teal-deep); background:#fff; border:1px solid var(--line);
+  padding:6px 12px; border-radius:100px;
+}
+
+/* ---------- progress ---------- */
+.progress{
+  position:sticky; top:0; z-index:20; margin:0 -22px;
+  padding:11px 22px; background:rgba(241,239,232,.92);
+  backdrop-filter:blur(8px); border-bottom:1px solid var(--line);
+  display:flex; align-items:center; gap:14px;
+}
+.bar{flex:1; height:5px; background:var(--line); border-radius:4px; overflow:hidden}
+.bar > i{display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--teal),var(--teal-deep));
+  border-radius:4px; transition:width .45s cubic-bezier(.2,.7,.2,1)}
+.pcount{font-size:12px; font-weight:700; color:var(--navy); white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+
+/* ---------- question card ---------- */
+main{padding:8px 0 30px}
+.q{
+  background:var(--card); border:1px solid var(--line); border-radius:15px;
+  padding:26px 24px; margin-top:18px; box-shadow:var(--shadow);
+  opacity:0; transform:translateY(14px);
+  animation:rise .6s cubic-bezier(.2,.7,.2,1) forwards;
+}
+@keyframes rise{to{opacity:1;transform:none}}
+.q.hero{border-color:#D8CDB6; box-shadow:0 16px 40px -18px rgba(20,41,62,.42)}
+.q.done{border-color:#BFD7DC}
+.qhead{display:flex; gap:15px; align-items:flex-start}
+.qnum{
+  font-family:'Newsreader',Georgia,serif; font-size:34px; font-weight:500;
+  color:var(--gold); line-height:.9; flex:none; width:38px;
+}
+.q.hero .qnum{color:var(--teal-deep)}
+.qtitle{font-family:'Newsreader',Georgia,serif; font-size:21px; font-weight:500;
+  color:var(--navy); line-height:1.28}
+.qtag{
+  display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:.13em;
+  text-transform:uppercase; color:#fff; background:var(--navy);
+  padding:4px 9px; border-radius:5px; margin-bottom:9px;
+}
+.qtag.soft{background:#E7F0F1; color:var(--teal-deep)}
+.snap{margin:24px 0 4px}
+.snap-h,.conclude h3{margin:0}
+.snap-h{font-size:11.5px;font-weight:700;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--gold-soft);margin-bottom:15px}
+.dim{margin-bottom:13px}
+.dim-top{display:flex;justify-content:space-between;gap:12px;
+  align-items:baseline;margin-bottom:5px}
+.dim-lab{font-size:12.5px;color:#C4D0DA;line-height:1.3}
+.dim-val{font-size:12px;font-weight:700;color:#fff;white-space:nowrap;flex:none}
+.dim-val.muted{color:#8597A6;font-weight:500}
+.track{height:9px;background:#22384F;border-radius:6px;overflow:hidden}
+.track > i{display:block;height:100%;border-radius:6px;
+  background:linear-gradient(90deg,var(--teal),var(--teal-deep));
+  transition:width .7s cubic-bezier(.2,.7,.2,1)}
+.track > i.neutral{background:#586A7B}
+.track > i.empty{background:transparent}
+.conclude{margin:26px 0 4px;padding:21px 23px;background:var(--navy-soft);
+  border-radius:13px;border-top:3px solid var(--teal)}
+.conclude h3{font-family:'Newsreader',Georgia,serif;font-weight:500;
+  font-size:19px;color:#fff;margin-bottom:11px}
+.conclude p{font-size:14px;color:#D6DCE2;line-height:1.62;margin:0 0 9px}
+.conclude p:last-child{margin-bottom:0}
+.conclude b{color:#fff;font-weight:600}
+.conclude .em{color:var(--gold-soft);font-style:italic;
+  font-family:'Newsreader',Georgia,serif;font-size:15px}
+.conclude.waiting{background:rgba(255,255,255,.045);border-top-color:#3A536E}
+.conclude.waiting p{color:#9BB0BF;font-style:italic}
+details.recapwrap{margin-top:20px;border-top:1px solid #2C435C}
+details.recapwrap > summary{cursor:pointer;list-style:none;padding:14px 0 2px;
+  font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--gold-soft)}
+details.recapwrap > summary::-webkit-details-marker{display:none}
+details.recapwrap > summary::after{content:" +";color:#8FA1B0}
+details.recapwrap[open] > summary::after{content:" \2013"}
+.qhelp{font-size:13px; color:var(--muted); margin:7px 0 0 53px}
+
+/* choice rows */
+.choices{margin:18px 0 0 53px; display:flex; flex-direction:column; gap:9px}
+.opt{
+  display:flex; align-items:center; gap:13px; text-align:left; width:100%;
+  background:#FBFAF6; border:1.5px solid var(--line); border-radius:11px;
+  padding:13px 15px; cursor:pointer; font-family:inherit;
+  transition:border-color .18s, background .18s, transform .12s;
+}
+.opt:hover{border-color:var(--teal); transform:translateX(2px)}
+.opt .mark{
+  flex:none; width:24px; height:24px; border-radius:50%;
+  border:2px solid #C9C3B2; display:grid; place-items:center;
+  transition:.18s;
+}
+.opt .mark svg{width:12px;height:12px; opacity:0; transform:scale(.4); transition:.18s}
+.opt .txt{flex:1}
+.opt .lab{display:block;font-weight:600; color:var(--navy); font-size:15px; line-height:1.3}
+.opt .sub{display:block;font-size:12.5px; color:var(--muted); margin-top:2px}
+.opt[aria-pressed="true"]{
+  background:var(--navy); border-color:var(--navy);
+}
+.opt[aria-pressed="true"] .lab{color:#fff}
+.opt[aria-pressed="true"] .sub{color:#AFC4CC}
+.opt[aria-pressed="true"] .mark{background:var(--gold); border-color:var(--gold)}
+.opt[aria-pressed="true"] .mark svg{opacity:1; transform:none}
+
+/* scale */
+.scale{margin:18px 0 0 53px}
+.seg{display:flex; gap:7px}
+.seg button{
+  flex:1; font-family:inherit; cursor:pointer; background:#FBFAF6;
+  border:1.5px solid var(--line); border-radius:9px; padding:11px 5px;
+  font-size:12px; font-weight:600; color:var(--navy); line-height:1.25;
+  transition:.16s;
+}
+.seg button:hover{border-color:var(--teal)}
+.seg button[aria-pressed="true"]{background:var(--teal); border-color:var(--teal-deep); color:#fff}
+.ends{display:flex; justify-content:space-between; margin-top:8px;
+  font-size:11.5px; color:var(--muted); font-style:italic;
+  font-family:'Newsreader',Georgia,serif}
+
+/* text inputs */
+.field{margin:16px 0 0 53px}
+textarea,input.short{
+  width:100%; font-family:inherit; font-size:14.5px; color:var(--ink);
+  background:#FBFAF6; border:1.5px solid var(--line); border-radius:10px;
+  padding:12px 14px; resize:vertical; transition:border-color .16s;
+}
+textarea{min-height:92px}
+textarea:focus,input.short:focus{outline:none; border-color:var(--teal)}
+.cc{text-align:right; font-size:11px; color:var(--muted); margin-top:5px;
+  font-variant-numeric:tabular-nums}
+
+/* ---------- summary ---------- */
+.summary{
+  background:var(--navy); color:#E8ECEF; border-radius:16px;
+  padding:30px 26px; margin-top:26px; box-shadow:var(--shadow);
+}
+.summary .skicker{font-size:11.5px;font-weight:700;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--gold-soft)}
+.summary h2{font-family:'Newsreader',Georgia,serif;font-weight:500;
+  font-size:25px;color:#fff;margin:8px 0 0;line-height:1.2}
+.commit{
+  margin:20px 0 4px; padding:18px 20px; border-radius:12px;
+  background:var(--navy-soft); border-left:4px solid var(--gold);
+}
+.commit .clab{font-size:11px;font-weight:700;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--gold-soft)}
+.commit .cval{font-family:'Newsreader',Georgia,serif;font-size:22px;
+  color:#fff;margin-top:5px;line-height:1.25}
+.commit .cval.empty{color:#8896A4;font-style:italic;font-size:16px}
+.recap{list-style:none;margin:18px 0 0;padding:0}
+.recap li{padding:11px 0;border-top:1px solid #2C435C}
+.recap li:first-child{border-top:none}
+.recap .rq{font-size:12.5px;color:#9BB0BF;line-height:1.4}
+.recap .ra{font-size:14.5px;color:#fff;font-weight:600;margin-top:2px}
+.recap .ra.none{color:#7C8C9B;font-weight:400;font-style:italic}
+.sactions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.btn{
+  font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer;
+  border-radius:9px;padding:12px 18px;border:1.5px solid transparent;
+  transition:.16s;letter-spacing:.01em;
+}
+.btn.primary{background:var(--gold);color:#3A2A10}
+.btn.primary:hover{background:var(--gold-soft)}
+.btn.ghost{background:transparent;color:#CdD6DD;border-color:#3A536E}
+.btn.ghost:hover{border-color:var(--teal);color:#fff}
+.note{font-size:12px;color:#8FA1B0;margin-top:16px;line-height:1.55}
+
+/* footer */
+footer{padding:26px 0 60px;text-align:center;font-size:12px;color:var(--muted)}
+footer .fr{width:36px;height:2px;background:var(--gold);margin:0 auto 14px;border-radius:2px}
+
+.toast{
+  position:fixed;left:50%;bottom:26px;transform:translX(-50%) translateY(20px);
+  transform:translateX(-50%) translateY(20px);
+  background:var(--navy);color:#fff;font-size:13px;font-weight:600;
+  padding:11px 20px;border-radius:9px;opacity:0;pointer-events:none;
+  transition:.3s;z-index:50;box-shadow:var(--shadow);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media print{
+  .progress,.sactions,.toast,.note{display:none}
+  body{background:#fff}
+  body::before{display:none}
+  .q,.summary{box-shadow:none;break-inside:avoid}
+  .summary{background:#fff;color:#000;border:1.5px solid #000}
+  .summary h2,.commit .cval,.recap .ra{color:#000}
+  .commit{background:#f3f3f3}
+}
+@media (max-width:540px){
+  .qhelp,.choices,.scale,.field{margin-left:0}
+  .seg{flex-wrap:wrap}
+  .seg button{flex:1 1 30%}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">A Leadership Reflection<span class="dot"></span>Companion to the Talk</div>
+    <h1 class="title serif">Leadership in the <em>Age of AI</em></h1>
+    <div class="rule"></div>
+    <p class="lede">Eight short questions on how you lead — not the tools you
+      use. Drawn from two talks on <b>authentic</b> and <b>inclusive</b>
+      leadership, and from research on <b>women&rsquo;s path to technical
+      leadership</b>, this is a private reflection: answer honestly, and leave
+      with one clear commitment.</p>
+    <div class="meta">
+      <span class="chip">8 questions</span>
+      <span class="chip">~4 minutes</span>
+      <span class="chip">Anonymous</span>
+      <span class="chip">Yours to keep</span>
+    </div>
+  </header>
+
+  <div class="progress">
+    <div class="bar"><i id="barFill"></i></div>
+    <div class="pcount"><span id="pdone">0</span> / <span id="ptot">8</span></div>
+  </div>
+
+  <main id="form"></main>
+
+  <section class="summary" id="summary">
+    <div class="skicker">Your Reflection</div>
+    <h2 class="serif">What you are taking with you</h2>
+    <div class="commit">
+      <div class="clab">My commitment before the next project</div>
+      <div class="cval empty" id="commitVal">Choose an answer to question one…</div>
+    </div>
+    <div class="snap" id="snap" style="display:none"></div>
+    <div class="conclude waiting" id="conclude">
+      <p>Answer the questions above &mdash; your reflection will take shape here.</p>
+    </div>
+    <details class="recapwrap">
+      <summary>See every answer</summary>
+      <ul class="recap" id="recap"></ul>
+    </details>
+    <div class="sactions">
+      <button class="btn primary" id="copyBtn">Copy my reflection</button>
+      <button class="btn ghost" id="printBtn">Save as PDF / print</button>
+      <button class="btn ghost" id="resetBtn">Start over</button>
+    </div>
+    <p class="note">This questionnaire runs entirely in your browser — nothing
+      is sent anywhere, and your answers are saved only on this device. For a
+      live group poll during a session, use a tool such as Slido or Mentimeter.</p>
+  </section>
+
+  <footer>
+    <div class="fr"></div>
+    Leadership in the Age of AI — a reflection companion.<br>
+    Lead inclusively. Grow your people. Strengthen the evidence.
+  </footer>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+const QUESTIONS=[
+ {id:"commit",type:"choice",hero:true,tag:"The Commitment",
+  q:"Which one leadership habit will you commit to before your next project?",
+  help:"Pick the single change you will actually carry forward \u2014 just one.",
+  options:[
+   {v:"Listen fully",sub:"Pause before I jump in to fix or respond."},
+   {v:"Ask the quietest person first",sub:"So being heard does not depend on being loudest."},
+   {v:"Sponsor someone",sub:"Say their name in the room where decisions are made."},
+   {v:"Name a contribution out loud",sub:"Credit a colleague, publicly, by name."},
+   {v:"Lead more like myself",sub:"Drop the borrowed style; lead from my own values."}
+  ]},
+ {id:"depends",type:"scale",
+  q:"On your team today, reaching technical leadership depends more on\u2026",
+  help:"Answer for how it actually works \u2014 not how it should.",
+  points:["Loudest","Leans loud","Mixed","Leans capable","Most capable"],
+  ends:["Being the loudest voice","Being the most capable"]},
+ {id:"reflect",type:"scale",
+  q:"Do the technical leaders you can actually name reflect the women \u2014 and especially women of colour \u2014 doing the work?",
+  help:"Picture the real people in the rooms you know, not the aspiration.",
+  points:["Not at all","A little","Fairly well","Closely"]},
+ {id:"trajectory",type:"scale",
+  q:"As AI reshapes who holds technical authority, are women gaining or losing ground toward leadership?",
+  help:"This is about what you observe \u2014 there is no wrong answer.",
+  points:["Losing ground","Holding steady","Gaining ground","Hard to say"]},
+ {id:"sponsor",type:"scale",
+  q:"When did you last sponsor someone \u2014 spend your own credibility on their advancement, not just give advice?",
+  help:"Sponsorship is public and concrete; mentoring is private.",
+  points:["This month","This quarter","This year","Longer ago","Not yet"]},
+ {id:"voice",type:"scale",
+  q:"In your last important meeting, how fully were the quietest voices heard?",
+  help:"",
+  points:["Not at all","A little","Fairly well","Fully heard"]},
+ {id:"ready",type:"scale",
+  q:"How ready is your team for the AI transition \u2014 in skills, and in who gets access to them?",
+  help:"Consider both capability and equal access.",
+  points:["Not started","Emerging","Underway","Strong"]},
+ {id:"change",type:"text",
+  q:"What is one thing you will do differently as a leader?",
+  help:"One honest sentence is enough.",
+  max:600,placeholder:"Before my next project, I will\u2026"},
+ {id:"future",type:"text",optional:true,tag:"Optional \u00b7 Your view",
+  q:"In your view, what would most help women \u2014 especially women of colour \u2014 reach technical leadership as AI reshapes the field?",
+  help:"A barrier, a change worth making, or a question worth studying. This one is optional.",
+  max:700,placeholder:"What I believe would make the biggest difference\u2026"}
+];
+
+// ---- scoring model for the reflection snapshot ----
+const SMAP={
+  depends:{"Loudest":0,"Leans loud":.25,"Mixed":.5,"Leans capable":.75,"Most capable":1},
+  reflect:{"Not at all":0,"A little":.34,"Fairly well":.67,"Closely":1},
+  trajectory:{"Losing ground":0,"Holding steady":.5,"Gaining ground":1,"Hard to say":null},
+  sponsor:{"This month":1,"This quarter":.75,"This year":.5,"Longer ago":.25,"Not yet":0},
+  voice:{"Not at all":0,"A little":.34,"Fairly well":.67,"Fully heard":1},
+  ready:{"Not started":0,"Emerging":.34,"Underway":.67,"Strong":1}
+};
+const DIMS=[
+  {id:"depends",   label:"Leadership rewards capability over volume"},
+  {id:"reflect",   label:"Leaders reflect the women doing the work"},
+  {id:"trajectory",label:"Women gaining ground as AI grows"},
+  {id:"sponsor",   label:"Recent, active sponsorship"},
+  {id:"voice",     label:"The quietest voices are heard"},
+  {id:"ready",     label:"Team ready for AI \u2014 with equal access"}
+];
+const FOCUS={
+  depends:"who rises to lead still leans toward visibility more than capability",
+  reflect:"the leaders you can name do not yet reflect the women doing the work",
+  trajectory:"you see women losing \u2014 or only holding \u2014 ground as AI grows",
+  sponsor:"it has been a while since you last actively sponsored someone",
+  voice:"the quietest voices are not yet fully heard in your meetings",
+  ready:"your team\u2019s readiness for AI, and equal access to it, is still early"
+};
+const STRENGTH={
+  depends:"capability, not volume, is what advances people around you",
+  reflect:"the leaders you can name genuinely reflect the women doing the work",
+  trajectory:"you see women gaining ground as AI reshapes the field",
+  sponsor:"you sponsor people actively and recently \u2014 not only mentor them",
+  voice:"the quietest voices are genuinely heard in your meetings",
+  ready:"your team is well prepared for AI, with real attention to access"
+};
+let lastConclusion="";
+
+const SVG_CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 10 18 20 6"/></svg>';
+const answers={};
+const form=document.getElementById("form");
+const REQ=QUESTIONS.filter(Q=>!Q.optional).length;
+document.getElementById("ptot").textContent=REQ;
+
+function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+QUESTIONS.forEach((Q,i)=>{
+  const card=document.createElement("section");
+  card.className="q"+(Q.hero?" hero":"");
+  card.style.animationDelay=(0.06*i)+"s";
+  card.id="q-"+Q.id;
+  let inner="<div class='qhead'><div class='qnum serif'>"+(i+1)+"</div><div>";
+  if(Q.tag) inner+="<span class='qtag"+(Q.optional?" soft":"")+"'>"+esc(Q.tag)+"</span><br>";
+  inner+="<div class='qtitle'>"+esc(Q.q)+"</div></div></div>";
+  if(Q.help) inner+="<div class='qhelp'>"+esc(Q.help)+"</div>";
+
+  if(Q.type==="choice"){
+    inner+="<div class='choices'>";
+    Q.options.forEach((o,k)=>{
+      inner+="<button class='opt' data-q='"+Q.id+"' data-v='"+esc(o.v)+"' "
+        +"aria-pressed='false'><span class='mark'>"+SVG_CHECK+"</span>"
+        +"<span class='txt'><span class='lab'>"+esc(o.v)+"</span>"
+        +"<span class='sub'>"+esc(o.sub)+"</span></span></button>";
+    });
+    inner+="</div>";
+  } else if(Q.type==="scale"){
+    inner+="<div class='scale'><div class='seg'>";
+    Q.points.forEach((p,k)=>{
+      const lbl=p||"\u00b7";
+      inner+="<button data-q='"+Q.id+"' data-v='"+esc(p||("Point "+(k+1)))
+        +"' aria-pressed='false'>"+esc(lbl)+"</button>";
+    });
+    inner+="</div>";
+    if(Q.ends) inner+="<div class='ends'><span>"+esc(Q.ends[0])
+      +"</span><span>"+esc(Q.ends[1])+"</span></div>";
+    inner+="</div>";
+  } else if(Q.type==="text"){
+    inner+="<div class='field'><textarea data-q='"+Q.id+"' maxlength='"+Q.max
+      +"' placeholder='"+esc(Q.placeholder)+"'></textarea>"
+      +"<div class='cc'><span id='cc-"+Q.id+"'>0</span> / "+Q.max+"</div></div>";
+  }
+  card.innerHTML=inner;
+  form.appendChild(card);
+});
+
+// ---- interactions ----
+form.querySelectorAll(".opt").forEach(b=>{
+  b.addEventListener("click",()=>{
+    const q=b.dataset.q;
+    form.querySelectorAll(".opt[data-q='"+q+"']").forEach(o=>
+      o.setAttribute("aria-pressed", o===b ? "true":"false"));
+    answers[q]=b.dataset.v;
+    markDone(q); update();
+  });
+});
+form.querySelectorAll(".seg button").forEach(b=>{
+  b.addEventListener("click",()=>{
+    const q=b.dataset.q;
+    form.querySelectorAll(".seg button[data-q='"+q+"']").forEach(o=>
+      o.setAttribute("aria-pressed", o===b ? "true":"false"));
+    answers[q]=b.dataset.v;
+    markDone(q); update();
+  });
+});
+form.querySelectorAll("textarea").forEach(t=>{
+  const q=t.dataset.q;
+  t.addEventListener("input",()=>{
+    document.getElementById("cc-"+q).textContent=t.value.length;
+    answers[q]=t.value.trim();
+    markDone(q); update();
+  });
+});
+function markDone(q){
+  const c=document.getElementById("q-"+q);
+  if(c) c.classList.toggle("done", !!answers[q]);
+}
+
+// ---- progress + summary ----
+const recapEl=document.getElementById("recap");
+function answered(){return QUESTIONS.filter(Q=>!Q.optional&&answers[Q.id]&&answers[Q.id].length).length;}
+function scoreOf(id){
+  const a=answers[id]; if(!a) return null;
+  const s=SMAP[id][a];
+  if(s===null||s===undefined) return {neutral:true};
+  return {v:s};
+}
+function renderReflection(){
+  const snap=document.getElementById("snap");
+  let any=false, html="<div class='snap-h'>Your reflection snapshot</div>";
+  DIMS.forEach(d=>{
+    const sc=scoreOf(d.id), a=answers[d.id];
+    let pct=0, cls="empty", val="\u2014", vcls=" muted";
+    if(sc&&sc.neutral){pct=50;cls="neutral";val=a;vcls=" muted";any=true;}
+    else if(sc){pct=Math.round(sc.v*100);cls="";val=a;vcls="";any=true;}
+    html+="<div class='dim'><div class='dim-top'><span class='dim-lab'>"
+      +esc(d.label)+"</span><span class='dim-val"+vcls+"'>"+esc(val)
+      +"</span></div><div class='track'><i class='"+cls+"' style='width:"
+      +pct+"%'></i></div></div>";
+  });
+  snap.innerHTML=html;
+  snap.style.display=any?"block":"none";
+
+  const box=document.getElementById("conclude");
+  const scored=DIMS.map(d=>({d,s:scoreOf(d.id)})).filter(x=>x.s&&!x.s.neutral);
+  if(scored.length<3){
+    box.className="conclude waiting";
+    box.innerHTML="<p>Answer at least three of the rating questions above "
+      +"\u2014 your reflection will take shape here.</p>";
+    lastConclusion=""; return;
+  }
+  scored.sort((a,b)=>a.s.v-b.s.v);
+  const avg=scored.reduce((t,x)=>t+x.s.v,0)/scored.length;
+  const low=scored[0].d, high=scored[scored.length-1].d;
+  let head;
+  if(avg>=0.7) head="Your answers describe leadership that is already strongly "
+    +"inclusive in practice \u2014 not just in name.";
+  else if(avg>=0.45) head="Your answers describe a leader with real inclusive "
+    +"foundations \u2014 and a few clear, concrete places to grow.";
+  else head="Your answers point to a genuine opportunity: several everyday "
+    +"leadership habits where small, deliberate change would matter most.";
+  const ps=[head];
+  ps.push("Where attention would matter most right now: <span class='em'>"
+    +FOCUS[low.id]+"</span>. One repeated habit there would move things.");
+  ps.push("A real strength to build on: <span class='em'>"+STRENGTH[high.id]
+    +"</span>.");
+  if(answers.commit)
+    ps.push("You have chosen to commit to <b>"+esc(answers.commit)+"</b>. "
+      +"Make it real \u2014 attach a date and a name to it.");
+  else
+    ps.push("Answer question one to anchor this reflection in a single, "
+      +"concrete commitment.");
+  ps.push("Representation in technical leadership rarely shifts through "
+    +"statements. It shifts through exactly these habits, repeated \u2014 and "
+    +"that is how women, especially women of colour, reach the rooms where "
+    +"AI decisions are made.");
+  box.className="conclude";
+  box.innerHTML="<h3 class='serif'>What your answers suggest</h3>"
+    +ps.map(p=>"<p>"+p+"</p>").join("");
+  lastConclusion=ps.map(p=>p.replace(/<[^>]+>/g,"")).join("\n\n");
+}
+
+function update(){
+  const n=answered(), tot=REQ;
+  document.getElementById("pdone").textContent=n;
+  document.getElementById("barFill").style.width=(100*n/tot)+"%";
+  // commitment
+  const cv=document.getElementById("commitVal");
+  if(answers.commit){cv.textContent=answers.commit; cv.classList.remove("empty");}
+  else{cv.textContent="Choose an answer to question one\u2026"; cv.classList.add("empty");}
+  // recap
+  recapEl.innerHTML="";
+  QUESTIONS.forEach(Q=>{
+    const li=document.createElement("li");
+    const a=answers[Q.id];
+    li.innerHTML="<div class='rq'>"+esc(Q.q)+"</div><div class='ra"
+      +(a?"":" none")+"'>"+(a?esc(a):"Not yet answered")+"</div>";
+    recapEl.appendChild(li);
+  });
+  renderReflection();
+  save();
+}
+
+// ---- copy ----
+document.getElementById("copyBtn").addEventListener("click",()=>{
+  let t="LEADERSHIP IN THE AGE OF AI \u2014 MY REFLECTION\n";
+  t+="==========================================\n\n";
+  t+="MY COMMITMENT: "+(answers.commit||"(not chosen)")+"\n\n";
+  if(lastConclusion){
+    t+="WHAT MY ANSWERS SUGGEST\n-----------------------\n"+lastConclusion+"\n\n";
+  }
+  t+="MY ANSWERS\n----------\n";
+  QUESTIONS.forEach((Q,i)=>{
+    t+=(i+1)+". "+Q.q+"\n   \u2192 "+(answers[Q.id]||"(not answered)")+"\n\n";
+  });
+  t+="Lead inclusively. Grow your people. Strengthen the evidence.\n";
+  const done=()=>toast("Reflection copied to clipboard");
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(t).then(done).catch(()=>fallback(t,done));
+  } else fallback(t,done);
+});
+function fallback(t,done){
+  const ta=document.createElement("textarea");
+  ta.value=t; ta.style.position="fixed"; ta.style.opacity="0";
+  document.body.appendChild(ta); ta.select();
+  try{document.execCommand("copy"); done();}catch(e){toast("Copy not available");}
+  document.body.removeChild(ta);
+}
+document.getElementById("printBtn").addEventListener("click",()=>window.print());
+document.getElementById("resetBtn").addEventListener("click",()=>{
+  if(!confirm("Clear all your answers and start over?")) return;
+  for(const k in answers) delete answers[k];
+  form.querySelectorAll("[aria-pressed]").forEach(o=>o.setAttribute("aria-pressed","false"));
+  form.querySelectorAll("textarea").forEach(t=>{t.value="";});
+  form.querySelectorAll(".cc span").forEach(s=>s.textContent="0");
+  form.querySelectorAll(".q").forEach(c=>c.classList.remove("done"));
+  try{if(window.storage)window.storage.delete("leadq:answers",false);}catch(e){}
+  update();
+});
+
+// ---- toast ----
+let tt;
+function toast(msg){
+  const el=document.getElementById("toast");
+  el.textContent=msg; el.classList.add("show");
+  clearTimeout(tt); tt=setTimeout(()=>el.classList.remove("show"),2400);
+}
+
+// ---- persistence (best-effort; works in supported environments) ----
+let st;
+function save(){
+  clearTimeout(st);
+  st=setTimeout(()=>{
+    try{if(window.storage)window.storage.set("leadq:answers",
+      JSON.stringify(answers),false);}catch(e){}
+  },400);
+}
+async function restore(){
+  try{
+    if(!window.storage) return;
+    const r=await window.storage.get("leadq:answers",false);
+    if(!r||!r.value) return;
+    const saved=JSON.parse(r.value);
+    Object.assign(answers,saved);
+    QUESTIONS.forEach(Q=>{
+      const v=answers[Q.id]; if(!v) return;
+      if(Q.type==="text"){
+        const ta=form.querySelector("textarea[data-q='"+Q.id+"']");
+        if(ta){ta.value=v; document.getElementById("cc-"+Q.id).textContent=v.length;}
+      }else{
+        const sel="[data-q='"+Q.id+"']";
+        form.querySelectorAll(sel).forEach(o=>{
+          if(o.dataset.v===v) o.setAttribute("aria-pressed","true");
+        });
+      }
+      markDone(Q.id);
+    });
+  }catch(e){}
+}
+restore().then(update);
+update();
+</script>
+</body>
+</html>
